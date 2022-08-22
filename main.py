@@ -44,7 +44,7 @@ class List(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
-# db.create_all()
+db.create_all()
 
 
 @login_manager.user_loader
