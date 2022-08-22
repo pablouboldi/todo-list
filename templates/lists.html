@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>To-do List</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+    <link rel="icon" href="{{ url_for('static', filename='img/checkbox.png')}}">
+
+    <!-- Custom fonts for this template -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Quicksand&family=Sacramento&display=swap"
+          rel="stylesheet">
+
+    <!-- FontAwesome Kit -->
+    <script src="https://kit.fontawesome.com/9666f27fb4.js" crossorigin="anonymous"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/styles.css')}}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('home') }}">
+            <img src="{{ url_for('static', filename='img/logo.png')}}" alt="" width="50" height="50">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse ms-auto" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<nav class="navbar navbar-expand-lg list-nav">
+    <div class="container-fluid">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <input class="form-control form-control-lg list-name" value="{{ user }}'s list" type="text"
+                       aria-label=".form-control-lg">
+            </li>
+        </ul>
+
+    </div>
+</nav>
+
+<div class="container-fluid min-vh-100" id="main-content">
+    <form action="{{ url_for('add') }}" method="POST">
+        <h2 class="title">Add new items to the to-do list.</h2>
+        <div class="input-group mb-3">
+
+            <input name="todoitem" type="text" class="form-control" placeholder="New to-do item"
+                   aria-label="Text input with checkbox">
+
+        </div>
+        <input type="submit" hidden>
+    </form>
+
+    <form action="{{ url_for('update') }}" method="POST">
+        {% if incomplete|length == 0 %}
+            <h2>You don't have things to do yet</h2>
+        {% else %}
+            <h2>To-do items</h2>
+        {% endif %}
+
+        {% for item in incomplete %}
+        <div class="input-group mb-3">
+            <div class="input-group-text">
+                <input name="todo-checkbox" class="form-check-input mt-0" type="checkbox" value="{{ item.id }}"
+                       aria-label="Checkbox for following text input">
+            </div>
+            <label class="form-control" aria-label="Text input with checkbox">
+                {{ item.description }}
+            </label><a role="button" class="btn btn-dark list-btn" href="{{ url_for('delete', item_id=item.id) }}">Delete Item</a>
+        </div>
+        {% endfor %}
+
+        {% if complete|length == 0 %}
+            <h2>You don't have completed items yet</h2>
+        {% else %}
+            <h2>Done items</h2>
+        {% endif %}
+        {% for item in complete %}
+            <div class="input-group mb-3">
+                <div class="input-group-text">
+                    <input name="done-checkbox" class="form-check-input mt-0" type="checkbox" value="{{ item.id }}"
+                           aria-label="Checkbox for following text input">
+                </div>
+                <label class="form-control" aria-label="Text input with checkbox">
+                    <del>{{ item.description }}</del>
+                </label><a role="button" class="btn btn-dark list-btn" href="{{ url_for('delete', item_id=item.id) }}">Delete Item</a>
+            </div>
+        {% endfor %}
+
+        <input type="submit" value="Update List" class="btn btn-dark list-btn">
+    </form>
+
+</div>
+
+<hr>
+
+<!-- Footer -->
+<footer class="text-center" id="footer">
+    <div class="container footer-container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto my-auto">
+                <ul class="list-inline text-center">
+
+                    <li class="list-inline-item">
+                        <a href="https://www.linkedin.com/in/pablo-adrián-uboldi-71755141/" target="_blank">
+                            <span class="fa-stack fa-md">
+                                <i class="fas fa-square fa-stack-2x"></i>
+                                <i class="fa-brands fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="list-inline-item">
+                        <a href="https://github.com/pablouboldi" target="_blank">
+                            <span class="fa-stack fa-md">
+                                <i class="fas fa-square fa-stack-2x"></i>
+                                <i class="fa-brands fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                </ul>
+                <span class="copyright text-muted">Copyright &copy; Pablo Uboldi 2022</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap core JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
