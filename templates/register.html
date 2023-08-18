@@ -46,14 +46,14 @@
             <ul class="navbar-nav ms-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ url_for('home') }}">Home</a>
+                    <a class="nav-link" aria-current="page" href="{{ url_for('home') }}">Home</a>
                 </li>
                 {% if not logged_in %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('login') }}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('register') }}">Sign up</a>
+                    <a class="nav-link active" href="{{ url_for('register') }}">Sign up</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
@@ -88,45 +88,6 @@
         </div>
     </div>
 </div>
-
-<!--<div class="container-fluid text-center min-vh-100" id="index-content">-->
-
-<!--    <div class="container heading h-50">-->
-<!--        <h1 class="title">Sign up!</h1>-->
-<!--    </div>-->
-
-<!--    {% if not logged_in %}-->
-<!--    <div class="container content h-50">-->
-<!--        {% with messages = get_flashed_messages() %}-->
-<!--        {% if messages %}-->
-<!--        {% for message in messages %}-->
-<!--        <p>{{ message }}</p>-->
-<!--        {% endfor %}-->
-<!--        {% endif %}-->
-<!--        {% endwith %}-->
-<!--        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalLogin">-->
-<!--            Login-->
-<!--        </button>-->
-<!--        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modalSignup">-->
-<!--            Sign up-->
-<!--        </button>-->
-<!--    </div>-->
-<!--    {% else %}-->
-
-<!--    {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}-->
-
-<!--    <div class="container content h-50">-->
-<!--        <h3>You are already logged in. Go to your list.</h3>-->
-<!--        <br>-->
-<!--        <a href="{{ url_for('user_list') }}">-->
-<!--            <button type="button" class="btn btn-primary">-->
-<!--                Go to list-->
-<!--            </button>-->
-<!--        </a>-->
-<!--    </div>-->
-<!--    {% endif %}-->
-
-<!--</div>-->
 
 <hr>
 
